@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styles from "./styles.module.css";
 import { AddTodo } from "../../Organisms/AddTodo";
 import { TodoList } from "../../Organisms/TodoList";
@@ -9,6 +9,21 @@ export const TodoTemplate = () => {
   const [inputValue, setInputValue] = useState("");
   /* 検索キーワード */
   const [searchKeyword, setSearchKeyword] = useState("");
+  /* todolist */
+  const [originTodolist, setOriginTodolist] = useState([
+    { id: 1, title: "Todo1" },
+    { id: 2, title: "Todo2" },
+  ]);
+  /* 表示用TodoList */
+  const showTodoList = useMemo(() => {
+    return originTodolist.filter((todo) => {
+      //検索キーワードに部分一致したtodoだけを一覧に表示する
+      //正規表現を使用するため、RegExpを使用
+      //第一引数はsearchKeywordの最初の文字列を検索、第二引数=フラグ(iは大文字と小文字を区別しない)
+      const regexp = new RegExp("^" + searchKeyword, "i");
+      return todo.title.match(regexp);
+    });
+  }, [originTodolist, searchKeyword]);
 
   /* action */
   /**
@@ -26,7 +41,6 @@ export const TodoTemplate = () => {
    * @param {*} e
    */
   const handleChangSerchKeyword = (e) => {
-    console.log(e.target.value);
     setSearchKeyword(e.target.value);
   };
 
@@ -48,12 +62,6 @@ export const TodoTemplate = () => {
     }
   };
 
-  /* todolist */
-  const [originTodolist, setOriginTodolist] = useState([
-    { id: 1, title: "Todo1" },
-    { id: 2, title: "Todo2" },
-  ]);
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Todo List</h1>
@@ -74,7 +82,9 @@ export const TodoTemplate = () => {
         />
       </section>
       {/* Todoリスト表示エリア */}
-      {<TodoList originTodolist={originTodolist} />}
+      <section className={styles.common}>
+        {showTodoList.length > 0 && <TodoList todoList={showTodoList} />}
+      </section>
     </div>
   );
 };
