@@ -62,6 +62,19 @@ export const TodoTemplate = () => {
     }
   };
 
+  /**
+   * TodoListの削除処理
+   * @param {number} targetId
+   * @param {string} targetTitle
+   */
+  const handleDeleteTodo = (targetId, targetTitle) => {
+    //WEBページ上に確認ダイアログボックスを表示させるメソッド
+    if (window.confirm(`「${targetTitle}」のtodoを削除しますか？`)) {
+      const newTodolist = originTodolist.filter((todo) => todo.id !== targetId);
+      setOriginTodolist(newTodolist);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Todo List</h1>
@@ -83,7 +96,12 @@ export const TodoTemplate = () => {
       </section>
       {/* Todoリスト表示エリア */}
       <section className={styles.common}>
-        {showTodoList.length > 0 && <TodoList todoList={showTodoList} />}
+        {showTodoList.length > 0 && (
+          <TodoList
+            todoList={showTodoList}
+            handleDeleteTodo={handleDeleteTodo}
+          />
+        )}
       </section>
     </div>
   );
