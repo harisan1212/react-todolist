@@ -18,7 +18,7 @@ export const AddTodo = (props) => {
     <div>
       <h2 className={style.subTitle}> ADD TODO</h2>
       <InputForm
-        addInputValue={addInputValue}
+        inputValue={addInputValue}
         placeholder={"New Todo"}
         handleChangeValue={onChangeTodo}
         handleKeyDown={onKeyDown}
