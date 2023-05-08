@@ -13,14 +13,13 @@ import style from "./style.module.css";
  */
 export const InputForm = (props) => {
   /* props */
-  const { addInputValue, placeholder, handleChangeValue, handleKeyDown } =
-    props;
+  const { inputValue, placeholder, handleChangeValue, handleKeyDown } = props;
 
   return (
     <input
       className={style.input}
       type="text"
-      value={addInputValue}
+      value={inputValue}
       placeholder={placeholder}
       onChange={handleChangeValue}
       onKeyDown={handleKeyDown}

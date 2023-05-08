@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { AddTodo } from "../../Organisms/AddTodo";
 import { TodoList } from "../../Organisms/TodoList";
+import { InputForm } from "../../atoms/InputForm";
 
 export const TodoTemplate = () => {
   /* addTodoの入力値　*/
   const [inputValue, setInputValue] = useState("");
+  /* 検索キーワード */
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   /* action */
   /**
@@ -13,22 +16,43 @@ export const TodoTemplate = () => {
    * @param {*} e
    */
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setInputValue(e.target.value);
+  };
+
+  /* action */
+  /**
+   * 検索キーワードの変更処理
+   * @param {*} e
+   */
+  const handleChangSerchKeyword = (e) => {
+    console.log(e.target.value);
+    setSearchKeyword(e.target.value);
   };
 
   /**
    * Todo新規登録処理
    */
   const handleAddTodo = (e) => {
-    //エンターキー押下かつ、inputValueの値が空でない場合True
-    if ((e.key = "Enter" && inputValue !== "")) {
-      console.log("hello!!");
+    //エンターキー押下かつ、inputValueの値が空でない場合
+    if (e.key === "Enter" && inputValue !== "") {
+      //console.log(originTodolist);
+      const newTodolist = [
+        ...originTodolist,
+        { id: originTodolist.length + 1, title: inputValue },
+      ];
+      //todoListを更新する
+      setOriginTodolist(newTodolist);
+      //console.log(newTodolist);
+      setInputValue("");
     }
   };
 
   /* todolist */
-  const [originTodolist, SetOriginTodolist] = useState(["todo1", "todo2"]);
+  const [originTodolist, setOriginTodolist] = useState([
+    { id: 1, title: "Todo1" },
+    { id: 2, title: "Todo2" },
+  ]);
 
   return (
     <div className={styles.container}>
@@ -43,7 +67,11 @@ export const TodoTemplate = () => {
       </section>
       {/* Todo検索エリア*/}
       <section className={styles.common}>
-        <input type="text" placeholder="Search Keyword" />
+        <InputForm
+          inputValue={searchKeyword}
+          placeholder={"Search Keyword"}
+          handleChangeValue={handleChangSerchKeyword}
+        />
       </section>
       {/* Todoリスト表示エリア */}
       {<TodoList originTodolist={originTodolist} />}
