@@ -1,15 +1,19 @@
-import React, { useState, useMemo } from "react";
 import styles from "./styles.module.css";
 import { AddTodo } from "../../Organisms/AddTodo";
 import { TodoList } from "../../Organisms/TodoList";
 import { InputForm } from "../../atoms/InputForm";
-import { useTodo } from "../../hooks/useTodo";
+import { useTodoContext } from "../../../contexts/TodoContext";
 
 export const TodoTemplate = () => {
-  const [
-    { inputValue, searchKeyword, showTodoList },
-    { handleChange, handleAddTodo, handleChangSerchKeyword, handleDeleteTodo },
-  ] = useTodo();
+  const {
+    inputValue,
+    searchKeyword,
+    showTodoList,
+    handleChange,
+    handleAddTodo,
+    handleChangSerchKeyword,
+    handleDeleteTodo,
+  } = useTodoContext();
 
   return (
     <div className={styles.container}>
