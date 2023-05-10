@@ -82,18 +82,13 @@ export const useTodo = () => {
     }
   };
 
-  const state = {
+  return {
     inputValue,
     searchKeyword,
     showTodoList,
-  };
-
-  const action = {
     handleChange,
     handleAddTodo,
     handleChangSerchKeyword,
     handleDeleteTodo,
   };
-
-  return [state, action];
 };
