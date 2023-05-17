@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+
+import { TodoProvider } from "./contexts/TodoContext";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routers";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <TodoProvider>
+      <RouterProvider router={router} />
+    </TodoProvider>
   </React.StrictMode>
 );
