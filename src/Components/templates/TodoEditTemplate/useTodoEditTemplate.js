@@ -50,7 +50,7 @@ export const useTodoEditTemplate = ({ originTodolist, updateTodo }) => {
   const handleUpdateTodo = useCallback(
     (e) => {
       e.preventDefault();
-      if (!!todo?.id && inputContent !== "" && inputContent !== "") {
+      if (!!todo?.id && inputTitle !== "" && inputContent !== "") {
         updateTodo(todo.id, inputTitle, inputContent);
         navigate(NAVIGATION_PATH.TOP);
       }

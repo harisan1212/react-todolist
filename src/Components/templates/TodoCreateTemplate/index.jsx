@@ -36,7 +36,7 @@ export const TodoCreateTemplate = () => {
   /*Todoの追加処理 */
   const handleCreateTodo = (e) => {
     e.preventDefault();
-    if ((inputValue !== "", inputContent !== "")) {
+    if (inputValue !== "" && inputContent !== "") {
       addTodo(inputValue, inputContent);
       navigate(NAVIGATION_PATH.TOP);
     }

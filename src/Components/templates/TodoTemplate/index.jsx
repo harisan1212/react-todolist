@@ -22,7 +22,7 @@ export const TodoTemplate = () => {
     useTodoTemplate({ originTodolist });
 
   return (
-    <BaseLayout title={"todoList"}>
+    <BaseLayout title={"TodoList"}>
       <div className={styles.container}>
         <div className={styles.area}>
           <InputForm
