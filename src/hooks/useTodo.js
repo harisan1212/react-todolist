@@ -6,42 +6,49 @@
  * @package hooks
  */
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { INIT_TODO_LIST, INIT_UNIQUE_ID } from "../constants/data";
 
 /**
  * useTodo
  */
 export const useTodo = () => {
-  /* addTodoの入力値　*/
-  const [inputValue, setInputValue] = useState("");
-  /* 検索キーワード */
-  const [searchKeyword, setSearchKeyword] = useState("");
   /* todolist */
-  const [originTodolist, setOriginTodolist] = useState([
-    { id: 1, title: "Todo1", content: "Todo1 content" },
-    { id: 2, title: "Todo2", content: "Todo2 content" },
-  ]);
+  const [originTodolist, setOriginTodolist] = useState(INIT_TODO_LIST);
+  /* todolist採番ID */
+  const [uniqueId, setUniqueId] = useState(INIT_UNIQUE_ID);
 
   /**
    * Todo新規登録処理
    * @param {*}title
    * @param {*}content
+   * @type {function(*,*):void}
    */
   const addTodo = useCallback(
     (title, content) => {
+      const nextUniqueId = uniqueId + 1;
       const newTodolist = [
         ...originTodolist,
         {
-          id: originTodolist.length + 1,
+          id: nextUniqueId,
           title: title,
           content: content,
         },
       ];
       setOriginTodolist(newTodolist);
+      setUniqueId(nextUniqueId);
     },
-    [originTodolist]
+    [uniqueId, originTodolist]
   );
 
+  /**
+   * Todoの更新処理
+   *
+   * @param {*}id
+   * @param {*}title
+   * @param {*}content
+   * @type {function(*,*,*):void}
+   */
   const updateTodo = useCallback(
     (id, title, content) => {
       const updateTodolist = originTodolist.map((todo) => {
@@ -63,6 +70,7 @@ export const useTodo = () => {
    * TodoListの削除処理
    * @param {number} targetId
    * @param {string} targetTitle
+   * @type {function(*,*):void}
    */
   const deleteTodo = useCallback(
     (targetId, targetTitle) => {
@@ -77,13 +85,6 @@ export const useTodo = () => {
   );
 
   return {
-    // inputValue,
-    // searchKeyword,
-    // showTodoList,
-    // handleChange,
-    // handleAddTodo,
-    // handleChangSerchKeyword,
-    // handleDeleteTodo,
     originTodolist,
     addTodo,
     updateTodo,
